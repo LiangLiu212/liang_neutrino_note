@@ -212,6 +212,113 @@ After that, you should be able to concretize it and install all the missing pack
     $ spack concertize
     $ spack install
 
+Go to your workarea for your GENIE, 
+
+.. code-block:: console
+
+    $ cd /path/to/your/GENIE
+
+You need to create a script to setup GENIE enviroment.
+
+.. code-block:: bash
+
+    #source /cvmfs/larsoft.opensciencegrid.org/spack-fnal-v1.0.0/setup-env.sh
+    #source /cvmfs/larsoft.opensciencegrid.org/setup-env.sh
+    source myspack/setup-env.sh
+    spack env activate mymarley
+    #spack load gcc/kwnheq5
+    spack load gcc@12.5.0
+    spack load root arch=linux-almalinux9-x86_64_v3
+    spack load pythia6 arch=linux-almalinux9-x86_64_v3
+    spack load log4cpp arch=linux-almalinux9-x86_64_v3
+    spack load lhapdf arch=linux-almalinux9-x86_64_v3
+    spack load libxml2 arch=linux-almalinux9-x86_64_v3
+    spack load boost
+    spack load geant4 arch=linux-almalinux9-x86_64_v3
+    spack load gsl arch=linux-almalinux9-x86_64_v3
+    #spack load ifdhc arch=linux-almalinux9-x86_64_v3 /rijacye
+    spack load xrootd arch=linux-almalinux9-x86_64_v3
+    #spack load cetlib arch=linux-almalinux9-x86_64_v3 /bdzdpju
+    spack load eigen
+    #spack load clhep@2.4.7.1 arch=linux-almalinux9-x86_64_v3 /3cnnbft
+    export_path(){
+    package_env=${1}
+    package=${2}
+    package_hash=`spack find --loaded --format "{hash}" ${package}`
+    export ${package_env}=`spack location -i /${package_hash}`
+    }
+
+
+    export_path PYTHIA6 pythia6
+    export_path LOG4CPP log4cpp
+    export_path LHAPDF6 lhapdf
+    export_path LIBXML2 libxml2
+    export_path BOOST boost
+    export_path GEANT4 geant4
+    export_path GSL_PATH gsl
+    export_path GCC_PATH gcc
+    #export_path CETLIB cetlib
+    #export_path CLHEP clhep
+    export PYTHIA6_LIB_DIR=${PYTHIA6}/lib
+    #export LHAPDF6=`spack location -i lhapdf`
+    #export LOG4CPP=`spack location -i log4cpp`
+    #export LIBXML2=`spack location -i libxml2`
+    #export BOOST=`spack location -i boost`
+    #export GEANT4=`spack location -i geant4`
+    current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    source ${current_dir}/inclxx_genie/install/bin/thisinclxx.sh
+    echo "Setting GENIE environment variables..."
+
+
+    # Finds the directory where this script is located. This method isn't
+    # foolproof. See https://stackoverflow.com/a/246128/4081973 if you need
+    # something more robust for edge cases (e.g., you're calling the script using
+    # symlinks).
+    THIS_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    export GENIEBASE=$THIS_DIRECTORY
+    export GENIE=$GENIEBASE/Generator
+    export XSECSPLINEDIR=$GENIEBASE/data
+    export GENIE_REWEIGHT=$GENIEBASE/Reweight
+    export PATH=$GENIE/bin:$GENIE_REWEIGHT/bin:$PATH
+    #export LD_LIBRARY_PATH=$GENIE/lib:$GENIE_REWEIGHT/lib:${LOG4CPP}/lib:${PYTHIA6}/lib:${GSL_PATH}/lib:${LHAPDF6}/lib:${LIBXML2}/lib:${BOOST}/lib:${GEANT4}/lib64:${GCC_PATH}/lib64:$LD_LIBRARY_PATH:`root-config --libdir`:${CLHEP}/lib
+    export LD_LIBRARY_PATH=$GENIE/lib:$GENIE_REWEIGHT/lib:${LOG4CPP}/lib:${PYTHIA6}/lib:${GSL_PATH}/lib:${LHAPDF6}/lib:${LIBXML2}/lib:${BOOST}/lib:${GEANT4}/lib64:${GCC_PATH}/lib64:$LD_LIBRARY_PATH:`root-config --libdir`
+    export LIBRARY_PATH=${LIBRARY_PATH}:${PYTHIA6_LIB_DIR}
+    source ${THIS_DIRECTORY}/marley/setup_marley.sh
+    unset GENIEBASE
+    unset current_dir
+
+In principle, you should be able to git clone branches from github. For this instruction, you can just copy the INCL++, GENIE, and GENIEReweight code from my area,
+
+.. code-block:: console
+
+    $ cp /exp/sbnd/app/users/liangliu/Maria/Generator .
+    $ cp /exp/sbnd/app/users/liangliu/Maria/inclxx_genie .
+    $ cp /exp/sbnd/app/users/liangliu/Maria/Reweight .
+
+* build INCL++
+
+.. code-block:: console
+
+    $ cd inclxx_genie/build
+    $ cmake ../inclxx/ -DINCL_DEEXCITATION_ABLA07=on -DINCL_DEEXCITATION_SMM=ON -DINCL_DEEXCITATION_GEMINIXX=ON -DBUILD_SHARED_LIBRARY=ON -DUSE_INSTALL_PATH=ON -DCMAKE_INSTALL_PREFIX=/<your_inclxx_path>/install
+    $ make -j N
+    $ make install
+
+* build GENIE
+
+.. code-block:: console
+
+    $ cd $GENIE
+    $ bash do_configure.sh
+    $ make -j N
+
+* build GENIE Reweight
+
+.. code-block:: console
+
+    $ cd $GENIE_REWEIGHT
+    $ make -j N
+
 
 
 
@@ -219,5 +326,6 @@ See Also
 ========
 
 - `Spack Documentation <https://spack.readthedocs.io/>`_
-- `GENIE Homepage <http://genie.hepforge.org/>`_
+- `GENIE Homepage <http://www.genie-mc.org/>`_
+- `Marley Homepage <https://www.marleygen.org/>`_
 - `Spack Packages <https://spack.readthedocs.io/en/latest/build_systems/>`_
