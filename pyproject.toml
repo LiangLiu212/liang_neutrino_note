@@ -3,6 +3,6 @@ requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "xsec-analyzer"
+name = "Liang's neutrino note"
 authors = [{name = "Liang Liu", email = "liangliu@fnal.gov"}]
 dynamic = ["version", "description"]

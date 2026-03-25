@@ -23,6 +23,7 @@ Contents
 
 .. toctree::
 
+   spack_install_genie
    usage
    workflow
    api
