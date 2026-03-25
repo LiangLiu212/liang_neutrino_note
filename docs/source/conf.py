@@ -2,8 +2,8 @@
 
 # -- Project information
 
-project = 'xsec-analyzer'
-copyright = '2024, Steven Gardiner, Burke Irwin, Liang Liu'
+project = "Liang's neutrino note"
+copyright = '2026, Liang Liu'
 author = 'Liang Liu'
 
 release = '0.1'
