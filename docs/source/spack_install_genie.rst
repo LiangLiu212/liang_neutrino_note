@@ -81,7 +81,7 @@ For example we can add root to your enviroment.
     kmcoa5w root@6.28.12
     ==> 3 installed packages
 
-We can find there are three installations of root in our system. ``jybpsif``, ``47uztdp``, ``kmcoa5w`` are the hasd for each ones.
+We can find there are three installations of root in our system. ``jybpsif``, ``47uztdp``, ``kmcoa5w`` are the hash for each ones.
 Now we can go back to our enviroment again and add your favorite one.
 
 .. code-block:: console
@@ -328,4 +328,4 @@ See Also
 - `Spack Documentation <https://spack.readthedocs.io/>`_
 - `GENIE Homepage <http://www.genie-mc.org/>`_
 - `Marley Homepage <https://www.marleygen.org/>`_
-- `Spack Packages <https://spack.readthedocs.io/en/latest/build_systems/>`_
+- `Spack at Fermilab <https://fnalssi.github.io/spack-at-fnal/>`_
