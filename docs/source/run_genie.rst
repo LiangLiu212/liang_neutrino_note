@@ -154,5 +154,11 @@ The ``run_genie.sh`` script.
     ##rm *.status
     rm input-flux.root
 
+
+GENIE make spline
+-----------------
+
+adsasd
+
 Viewing Results
 ---------------

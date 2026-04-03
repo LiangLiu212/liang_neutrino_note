@@ -25,6 +25,7 @@ Contents
 
    spack_install_genie
    run_genie
+   run_nuisance
    usage
    workflow
    api
